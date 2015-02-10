@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Patrick Huber">
+  <link rel="shortcut icon" href="images/favicon.png">
+  
+  <title>PallCare WebViewer</title>
+  
+  <!-- Google Fonts (CSS) -->
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,400italic,700,800' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Raleway:300,200,100' rel='stylesheet' type='text/css'>
+  
+  <!-- Bootstrap core CSS -->
+  <link href="js/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" href="fonts/font-awesome-4/css/font-awesome.min.css">
+  
+  <!-- Custom styles for this template -->
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+
+<body style="background-color: #ededed;">
+  <div id="cl-wrapper" class="login-container">
+  
+  	<div class="middle-login">
+  		<div class="block-flat">
+  			<div class="header">							
+  				<h3 class="text-center"><img class="logo-img" src="images/logo.png" alt="logo"/>PallCare</h3>
+  			</div>
+  			<div>
+  				<form id="form-login" style="margin-bottom: 0px !important;" class="form-horizontal">
+  					<div class="content">
+  						<h4 class="title">Anmeldung</h4>
+  							<div class="form-group">
+  								<div class="col-sm-12">
+  									<div class="input-group">
+  										<span class="input-group-addon"><i class="fa fa-user"></i></span>
+  										<input type="text" placeholder="Benutzername" name="username" class="form-control" required autofocus>
+  									</div>
+  								</div>
+  							</div>
+  							<div class="form-group">
+  								<div class="col-sm-12">
+  									<div class="input-group">
+  										<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+  										<input type="password" placeholder="Passwort" name="password" class="form-control" required>
+  									</div>
+  								</div>
+  							</div>
+  							
+  					</div>
+  					<div class="foot">
+  						<button class="btn btn-default btn-rad" data-dismiss="modal" type="button" onclick="toSignUpPage()">Registrieren</button>
+  						<button class="btn btn-primary btn-rad" data-dismiss="modal" type="submit">Anmelden</button>
+  					</div>
+  				</form>
+  			</div>
+  		</div>
+  		<div class="text-center"><a href="http://www.meduniwien.ac.at" target="_blank">&copy; 2015 Medizinische Universität Wien</a></div>
+  	</div> 
+  	
+  </div>
+  
+  <script type="text/javascript">
+    function toSignUpPage() {
+		window.open("sign-up.html", "_self");
+	}
+  </script>
+
+  <script id="login-failed-tpl" type="text/x-handlebars-template">
+	  <div class="alert alert-danger">
+		  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <i class="fa fa-times-circle sign"></i><strong>Anmeldung fehlgeschlagen!</strong> Benutzername und/oder Passwort falsch.
+	  </div>
+  </script>
+  
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/parse/parse-1.3.4.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/behaviour/general.js"></script>
+  <script type="text/javascript" src="js/behaviour/login.js"></script>
+</body>
+</html>

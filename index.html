@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PallCare WebViewer">
+  <meta name="author" content="Patrick Huber">
+  <link rel="shortcut icon" href="images/favicon.png">
+  
+  <title>PallCare WebViewer</title>
+
+  <!-- ############################ CSS files ############################ -->
+  <!-- Google Fonts (CSS) -->
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,400italic,700,800' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Raleway:300,200,100' rel='stylesheet' type='text/css'>
+  <!-- Bootstrap (CSS) -->
+  <link href="js/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="js/bootstrap.switch/bootstrap-switch.css" />
+  <link rel="stylesheet" type="text/css" href="js/bootstrap.datetimepicker/css/bootstrap-datetimepicker.min.css" />
+  <link rel="stylesheet" type="text/css" href="js/bootstrap.slider/css/slider.css" />
+  <!-- Font Awesome (CSS) -->
+  <link rel="stylesheet" href="fonts/font-awesome-4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/pygments.css">
+  <!-- Jquery (CSS) -->
+  <link rel="stylesheet" type="text/css" href="js/jquery.gritter/css/jquery.gritter.css" />
+  <link rel="stylesheet" type="text/css" href="js/jquery.nanoscroller/nanoscroller.css" />
+  <link rel="stylesheet" type="text/css" href="js/jquery.select2/select2.css" />
+  <link rel="stylesheet" type="text/css" href="js/jquery.datatables/bootstrap-adapter/css/datatables.css" />
+  <!-- Own Style File (CSS) -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- ############################ JavaScript files ############################ -->
+  <!-- JQuery (JS) -->
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/jquery.nanoscroller/jquery.nanoscroller.js"></script>
+  <script type="text/javascript" src="js/jquery.sparkline/jquery.sparkline.min.js"></script>
+  <script type="text/javascript" src="js/jquery.easypiechart/jquery.easy-pie-chart.js"></script>
+  <script type="text/javascript" src="js/jquery.ui/jquery-ui.js"></script>
+  <script type="text/javascript" src="js/jquery.nestable/jquery.nestable.js"></script>
+  <script type="text/javascript" src="js/jquery.select2/select2.min.js"></script>
+  <script type="text/javascript" src="js/jquery.gritter/js/jquery.gritter.js"></script>
+  <script type="text/javascript" src="js/jquery.datatables/jquery.datatables.min.js"></script>
+  <script type="text/javascript" src="js/jquery.datatables/bootstrap-adapter/js/datatables.js"></script>
+  <!-- Bootstrap (JS) -->
+  <script type="text/javascript" src="js/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.switch/bootstrap-switch.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.slider/js/bootstrap-slider.js"></script>
+  <!-- Parse JavaScript SDK (JS) -->
+  <script type="text/javascript" src="js/parse/parse-1.3.4.min.js"></script>
+  <!-- Handlebars.js (JS) -->
+  <script type="text/javascript" src="js/handlebars/handlebars-v3.0.0.js"></script>
+  <!-- Highcharts JS (JS) -->
+  <script type="text/javascript" src="js/highcharts/highstock.js"></script>
+  <script type="text/javascript" src="js/highcharts/modules/exporting.js"></script>
+  <!-- Own JavaScript File (JS) -->
+  <script type="text/javascript" src="js/behaviour/general.js"></script>
+  <script type="text/javascript" src="js/behaviour/main.js"></script>
+  <script type="text/javascript" src="js/behaviour/logout.js"></script>
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <![endif]-->
+
+  <script id="temperatures-tpl" type="text/x-handlebars-template">
+    {{#each temperature}}
+      <p>{{DegreeCelsius}} ({{createdAt}})</p>
+    {{/each}}
+  </script>
+
+  <script id="username-tpl" type="text/x-handlebars-template">
+    <img alt="Avatar" src="images/avatar3_30.png" />{{{username}}} <b class="caret"></b>
+  </script>
+</head>
+
+<body>
+  <div id="head-nav" class="navbar navbar-default navbar-fixed-top">
+    
+    <!-- Main Menu -->
+    <div class="container-fluid">
+      
+      <!-- Left Menu Side -->
+      <div class="navbar-header">
+        <!-- Toggle Button visible for Extra Small Devices -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="fa fa-gear"></span>
+        </button>
+        <!-- Brand Logo -->
+        <a class="navbar-brand" href="#"><span>PallCare</span></a>
+      </div>
+      
+      <!-- Right Menu Side -->
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <!-- Left Menu Items -->
+          <li class="active"><a href="#">Übersicht</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Patient anlegen</a></li>
+              <li><a href="#">Patient löschen</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right user-nav">
+          <!-- Right Profile Menu Items -->
+          <li class="dropdown profile_menu">
+            <a href="#" id="usernameHeader" class="dropdown-toggle" data-toggle="dropdown"></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Mein Account</a></li>
+              <li class="divider"></li>
+              <li><a class="logout">Abmelden</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div id="cl-wrapper" class="fixed-menu">
+  
+    <!--  Sidebar Menu -->
+    <div class="cl-sidebar">
+      <!-- Collapse Toggle -->
+      <div class="cl-toggle"><i class="fa fa-bars"></i></div>
+      
+      <!-- Menu Items -->
+      <div class="cl-navblock">
+        <div class="menu-space">
+          <div class="content">
+            <ul class="cl-vnavigation">
+              <li><a href="#"><i class="fa fa-group"></i><span>Patienten</span></a>
+                <ul class="sub-menu">
+                  <li class="active"><a href="#">P01</a></li>
+                  <li><a href="#">P02</a></li>
+                  <li><a href="#">P03</a></li>
+                  <li><a href="#">P04</a></li>
+                  <li><a href="#">P05</a></li>
+                  <li><a href="#">P06</a></li>
+                  <li><a href="#">P07</a></li>
+                  <li><a href="#">P08</a></li>
+                  <li><a href="#">P09</a></li>
+                  <li><a href="#">P10</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="text-right collapse-button" style="padding:7px 9px;">
+          <!--<input type="text" class="form-control search" placeholder="Suche ..." />-->
+          <button id="sidebar-collapse" class="btn btn-default" style=""><i style="color:#fff;" class="fa fa-angle-left"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid" id="pcont" style="background-color: #ededed;">
+      <div class="page-head">
+        <h2>P01</h2>
+        <ol class="breadcrumb">
+          <li>M <i class="fa fa-male"></i></li>
+          <li>28.12.1955</li>
+          <li><strong>59</strong> Jahre</li>
+        </ol>
+      </div>
+
+      <div class="cl-mcont" style="background-color: #ededed;">
+
+        <div class="tab-container">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#temperature" data-toggle="tab">Temperatur</a></li>
+            <li><a href="#weight" data-toggle="tab">Gewicht</a></li>
+            <li><a href="#bloodPressure" data-toggle="tab">Blutdruck</a></li>
+            <li><a href="#pain" data-toggle="tab">Schmerz</a></li>
+            <li><a href="#drink" data-toggle="tab">Trinken</a></li>
+            <li><a href="#eat" data-toggle="tab">Essen</a></li>
+            <li><a href="#oxygenSaturation" data-toggle="tab">SpO<sub>2</sub></a></li>
+            <li><a href="#notes" data-toggle="tab">Tagebuch</a></li>
+          </ul>
+          <div class="tab-content" style="margin-bottom: 10px;">
+            <div class="tab-pane active" id="temperature">
+
+              <!-- Temperatur -->
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="content">
+                    <div id="TemperatureChart" style="height: 400px; width: 100%; padding-bottom: 40px;"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- Template written with Handlebars.js
+              <div class="main-container-temp"></div>
+              -->
+
+              <div class="row">
+                <div class="col-lg-12">
+                    <div class="header">
+                      <h3>Tabelle</h3>
+                    </div>
+                    <div class="content">
+                      <div class="table-responsive">
+                        <table class="table table-bordered" id="TemperatureDataTable" width="100%">
+                          <thead>
+                          <tr>
+                            <th>Wert</th>
+                            <th>Datum</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                </div>
+              </div>
+
+
+            </div>
+            <div class="tab-pane" id="weight">
+
+              <!-- Gewicht -->
+              <div class="row">
+                <div class="col-lg-12 pull-left">
+                  <div class="block-flat">
+                    <div class="header">
+                      <h3>Gewicht</h3>
+                    </div>
+                    <div class="content">
+                      Daten
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="tab-pane" id="bloodPressure">
+
+              <!-- Blutdruck + Puls -->
+              <div class="row">
+                <div class="col-lg-12 pull-left">
+                  <div class="block-flat">
+                    <div class="header">
+                      <h3>Blutdruck + Puls</h3>
+                    </div>
+                    <div class="content">
+                      Daten
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="tab-pane" id="pain">
+
+              <!-- Schmerz -->
+              <div class="row">
+                <div class="col-lg-12 pull-left">
+                  <div class="block-flat">
+                    <div class="header">
+                      <h3>Schmerz</h3>
+                    </div>
+                    <div class="content">
+                      Daten
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="tab-pane" id="drink">
+
+              <!-- Trinken -->
+              <div class="row">
+                <div class="col-lg-12 pull-left">
+                  <div class="block-flat">
+                    <div class="header">
+                      <h3>Trinken</h3>
+                    </div>
+                    <div class="content">
+                      Daten
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="tab-pane" id="eat">
+
+              <!-- Essen -->
+              <div class="row">
+                <div class="col-lg-12 pull-left">
+                  <div class="block-flat">
+                    <div class="header">
+                      <h3>Essen</h3>
+                    </div>
+                    <div class="content">
+                      Daten
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="tab-pane" id="oxygenSaturation">
+
+              <!-- SpO2 -->
+              <div class="row">
+                <div class="col-lg-12 pull-left">
+                  <div class="block-flat">
+                    <div class="header">
+                      <h3>SpO<sub>2</sub></h3>
+                    </div>
+                    <div class="content">
+                      Daten
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="tab-pane" id="notes">
+
+              <!-- Tagebuch -->
+              <div class="row">
+                <div class="col-lg-12 pull-left">
+                  <div class="block-flat">
+                    <div class="header">
+                      <h3>Tagebuch</h3>
+                    </div>
+                    <div class="content">
+                      Daten
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="pull-right" style="padding-right: 10px;">
+          <small>&copy 2015 Medizinische Universität Wien<small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+
+      //Add dataTable Functions
+      var functions = $('<div class="btn-group"><button class="btn btn-default btn-xs" type="button">Actions</button><button data-toggle="dropdown" class="btn btn-xs btn-primary dropdown-toggle" type="button"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button><ul role="menu" class="dropdown-menu pull-right"><li><a href="#">Edit</a></li><li><a href="#">Copy</a></li><li><a href="#">Details</a></li><li class="divider"></li><li><a href="#">Remove</a></li></ul></div>');
+      $("#datatable tbody tr td:last-child").each(function(){
+        $(this).html("");
+        functions.clone().appendTo(this);
+      });
+
+      $(document).ready(function(){
+        //initialize the javascript
+        App.init();
+      });
+
+      $(function () {
+
+        $.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data) {
+          // Create the chart
+          $('#TemperatureChart').highcharts('StockChart', {
+            credits: {
+              enabled: false
+            },
+
+            rangeSelector : {
+              selected : 1
+            },
+
+            title : {
+              text : 'Temperatur'
+            },
+
+            series : [{
+              name : 'AAPL',
+              data : data,
+              tooltip: {
+                valueDecimals: 2
+              }
+            }]
+          }, function (chart) {
+              setTimeout(function () {
+                $('input.highcharts-range-selector', $(chart.container).parent())
+                        .datetimepicker({
+                          format: "yyyy-mm-dd",
+                          minView: 2,
+                          autoclose: true
+                        });
+              }, 0);
+            });
+        });
+
+      });
+  </script>
+</body>
+</html>
